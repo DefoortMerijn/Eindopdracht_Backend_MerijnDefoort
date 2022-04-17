@@ -1,0 +1,15 @@
+GET http://localhost:5080/users
+
+###
+
+GET http://localhost:5080/articles/
+
+###
+POST http://localhost:5080/user/
+Content-Type: application/json
+
+{
+    "name": "John",
+    "email": "John.Doe@gmail.com",
+    "password": "123456"
+    }
