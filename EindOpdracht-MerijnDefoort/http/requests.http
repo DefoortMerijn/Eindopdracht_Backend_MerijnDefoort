@@ -1,11 +1,11 @@
-GET http://localhost:5080/users
+GET http://localhost:5000/users
 
 ###
 
-GET http://localhost:5080/articles/
+GET http://localhost:5000/articles/
 
 ###
-POST http://localhost:5080/user/
+POST http://localhost:5000/user/
 Content-Type: application/json
 
 {
@@ -13,3 +13,22 @@ Content-Type: application/json
     "email": "John.Doe@gmail.com",
     "password": "123456"
     }
+
+###
+
+POST http://localhost:5000/articles
+Content-Type: application/json
+[
+    {
+        "Name": "Article 1",
+        "Description": "Article 1 body",
+        "Price": 15.99,
+        "Image": "http://www.google.com/image.png"
+    },
+    {
+        "Name": "Article 2",
+        "Description": "Article 2 body",
+        "Price": 15.99,
+        "Image": "http://www.google.com/image.png"
+    }
+]

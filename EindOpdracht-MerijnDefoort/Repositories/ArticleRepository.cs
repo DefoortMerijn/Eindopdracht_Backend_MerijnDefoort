@@ -5,6 +5,7 @@ public interface IArticleRepository
     Task<List<Article>> AddArticles(List<Article> NewArticles);
     Task<Article> GetArticle(string id);
     Task<List<Article>> GetArticles();
+    Task<List<Article>> GetArticlesByCategory(string category);
 }
 
 public class ArticleRepository : IArticleRepository
@@ -28,6 +29,6 @@ public class ArticleRepository : IArticleRepository
     }
     public async Task<List<Article>> GetArticles() => await _context.ArticleCollection.Find(_ => true).ToListAsync();
 
-    public async Task<Article> GetArticle(string id) => await _context.ArticleCollection.Find<Article>(id).FirstOrDefaultAsync();
-
+    public async Task<Article> GetArticle(string id) => await _context.ArticleCollection.Find(Article => Article.Id == id).FirstOrDefaultAsync();
+    public async Task<List<Article>> GetArticlesByCategory(string category) => await _context.ArticleCollection.Find(Article => Article.Category == category).ToListAsync();
 }
