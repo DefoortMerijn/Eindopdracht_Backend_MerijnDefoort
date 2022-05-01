@@ -1,10 +1,8 @@
 namespace StoreTests.FakeRepositories;
 
-
 public class FakeArticleRepository : IArticleRepository
 {
     public static List<Article> _articles = new List<Article>();
-
     public FakeArticleRepository()
     {
         _articles.Add(new Article()
@@ -27,7 +25,6 @@ public class FakeArticleRepository : IArticleRepository
 
     public static Task<Article> AddFakeArticle(Article article)
     {
-
         _articles.Add(article);
         return Task.FromResult(article);
     }
@@ -49,6 +46,4 @@ public class FakeArticleRepository : IArticleRepository
     {
         return Task.FromResult(_articles.Where(a => a.Category == category).ToList());
     }
-
-
 }

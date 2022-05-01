@@ -3,7 +3,6 @@ namespace StoreTests.FakeRepositories;
 public class FakeLoginRepository : ILoginRepository
 {
     public static List<Login> _logins = new List<Login>();
-
     public FakeLoginRepository()
     {
         _logins.Add(new Login()

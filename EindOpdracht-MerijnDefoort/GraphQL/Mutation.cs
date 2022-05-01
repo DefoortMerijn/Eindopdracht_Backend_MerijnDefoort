@@ -4,7 +4,6 @@ namespace Store.GraphQL.Mutations;
 
 public class Mutation
 {
-
     public async Task<AddArticlePayload> AddArticle([Service] IStoreService storeService, AddArticleInput input)
     {
         var newArticle = new Article()

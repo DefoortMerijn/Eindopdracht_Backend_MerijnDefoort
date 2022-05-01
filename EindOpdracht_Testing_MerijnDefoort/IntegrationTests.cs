@@ -13,12 +13,10 @@ public class IntegrationTests
         Assert.NotNull(articles);
         Assert.True(articles.Count > 0);
         Assert.IsType<List<Article>>(articles);
-
     }
     [Fact]
     public async Task Should_Return_Users()
     {
-        
         var application = ApiHelper.CreateApi();
         var client = application.CreateClient();
         var result = await client.GetAsync("/users");
@@ -27,7 +25,6 @@ public class IntegrationTests
         Assert.NotNull(users);
         Assert.True(users.Count > 0);
         Assert.IsType<List<Login>>(users);
-
     }
     [Fact]
     public async Task Should_Return_ArticleById()
@@ -41,7 +38,6 @@ public class IntegrationTests
         Assert.IsType<Article>(article);
         Assert.Equal("1", article.Id);
     }
-
     [Fact]
     public async Task Add_Article_Created()
     {
@@ -62,7 +58,5 @@ public class IntegrationTests
         var article = await result.Content.ReadFromJsonAsync<Article>();
         Assert.NotNull(article);
         Assert.Equal("2", article.Id);
-
-
     }
 }
