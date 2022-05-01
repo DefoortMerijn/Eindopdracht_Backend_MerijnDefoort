@@ -40,6 +40,7 @@ app.MapPost("/user", async (IStoreService storeservice, Login login, IValidator<
 
         if (result.IsValid)
         {
+            login.Password = BCrypt.Net.BCrypt.HashPassword(login.Password);
             var created = await storeservice.AddLogin(login);
             return Results.Created($"/user/{created.Id}", created);
         }
@@ -77,10 +78,10 @@ app.MapPost("/articles", async (List<Article> articles, IStoreService storeservi
     }
     return Results.StatusCode(500);
 });
-app.MapPost("/auth", async (Login login, IAuthenticationService authService, IOptions<AuthenticationSettings> authsettings, IStoreService storeservice) =>
+app.MapPost("/auth", async (IAuthenticationService authService, IOptions<AuthenticationSettings> authsettings, AuthenticationRequestBody authBody) =>
 {
 
-    var created = await storeservice.VerifyUserAsync(login.Email, login.Password);
+    var created = await authService.ValidateUser(authBody.Email, authBody.Password);
     if (created == null)
     {
         return Results.BadRequest(new { errors = "Invalid credentials" });

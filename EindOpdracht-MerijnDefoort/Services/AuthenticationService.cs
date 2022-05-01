@@ -19,7 +19,11 @@ public class AuthenticationService : IAuthenticationService
     {
         _loginRepository = loginRepository;
     }
-    public async Task<Login> ValidateUser(string email, string password) => await _loginRepository.VerifyUserAsync(email, password);
+    public async Task<Login> ValidateUser(string email, string password)
+    {
+        var user = await _loginRepository.GetLoginByEmailAsync(email);
+        return BCrypt.Net.BCrypt.Verify(password, user.Password) ? user : null;
+    }
     public string GenerateToken(IOptions<AuthenticationSettings> authSettings, Login login)
     {
         // TOKEN AANMAKEN

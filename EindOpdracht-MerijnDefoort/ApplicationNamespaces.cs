@@ -12,6 +12,7 @@ global using MongoDB.Bson.Serialization.Attributes;
 global using FluentValidation;
 global using FluentValidation.AspNetCore;
 global using AutoMapper;
+global using BCrypt.Net;
 
 global using Store.API.Context;
 global using Store.API.Configuration;
