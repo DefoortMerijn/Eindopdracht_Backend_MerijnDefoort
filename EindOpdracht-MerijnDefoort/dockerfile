@@ -1,0 +1,32 @@
+FROM mcr.microsoft.com/dotnet/aspnet:6.0-focal AS base
+WORKDIR /app
+EXPOSE 5000
+
+ENV ASPNETCORE_URLS=http://+:5000
+
+
+# Enkel bij het builden of publishen gebruiken we deze image
+FROM mcr.microsoft.com/dotnet/sdk:6.0-focal AS build 
+WORKDIR /src
+# Kopieren is relatief aan de context waar we inzitten. We kopieren nog niet alles momenteel ...
+COPY ["EindOpdracht-MerijnDefoort.csproj", "./"]
+# We zorgen dat alle packages geinstalleerd worden indien nodig
+RUN dotnet restore "EindOpdracht-MerijnDefoort.csproj"
+# Nu kunnen we al de rest uit de context kopieren
+COPY . .
+WORKDIR "/src/."
+# Schrijf de output van onze `dotnet build` weg naar de `/app/build` directory. Hergebruik dit straks!
+RUN dotnet build "EindOpdracht-MerijnDefoort.csproj" -c Release -o /app/build
+
+# We gaan nu verder waar de build image gestopt is, en gaan nog een publish commando uitvoeren.
+FROM build AS publish
+RUN dotnet publish "EindOpdracht-MerijnDefoort.csproj" -c Release -o /app/publish  /p:UseAppHost=false
+
+# De final image ... Deze zullen we uitvoeren
+# Je merkt dat we de `base` image gaan hergebruiken. Deze bevat geen `dotnet-sdk` maar wel een aspnet versie
+FROM base AS final 
+WORKDIR /app
+# We kopiëren alle files uit /app/publish van de publish image
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "EindOpdracht-MerijnDefoort.dll"] 
+# het commando om de app op te starten

@@ -89,4 +89,7 @@ app.MapPost("/auth", async (Login login, IAuthenticationService authService, IOp
     return Results.Ok(new { id = created.Id, name = created.Name, email = created.Email, token });
 });
 
-app.Run("http://0.0.0.0:5000");
+app.Run();
+
+//Hack om testen te doen werken
+public partial class Program { }

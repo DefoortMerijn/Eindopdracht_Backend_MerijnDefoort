@@ -1,5 +1,6 @@
 namespace Store.API.Services;
 
+
 public interface IStoreService
 {
     Task<Article> AddArticle(Article NewArticle);
@@ -7,9 +8,9 @@ public interface IStoreService
     Task<Login> AddLogin(Login NewLogin);
     Task<Article> GetArticle(string id);
     Task<List<Article>> GetArticles();
+    Task<List<Article>> GetArticlesByCategory(string category);
     Task<Login> GetLogin(string id);
     Task<List<Login>> GetLogins();
-    Task<List<Article>> GetArticlesByCategory(string category);
     Task<Login> VerifyUserAsync(string email, string password);
 }
 
@@ -38,4 +39,5 @@ public class StoreService : IStoreService
 
     public async Task<List<Article>> GetArticlesByCategory(string category) => await _articleRepository.GetArticlesByCategory(category);
     public async Task<Login> VerifyUserAsync(string email, string password) => await _loginRepository.VerifyUserAsync(email, password);
+
 }
